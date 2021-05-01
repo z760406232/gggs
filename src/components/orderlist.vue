@@ -4,28 +4,17 @@
 
 		<div class="list">
 			<ul>
-				<li class="about">
-					<div class="listTime">2021/04/06 <span>9:14</span></div>
+				<li class="about" v-for="(item,index) in List" :key="index">
+					<div class="listTime">就诊时间 : {{item.time}}</div>
 					<div class="listCard">
 						<ul>
-							<li>姓名: <span>张三</span></li>
-							<li>性别: <span>男</span> </li>
-							<li>身份证: <span>42011519961030156</span> </li>
-							<li>手机号: <span>1851884541</span> </li>
-							<li>地址: <span>北京-天安门</span> </li>
-						</ul>
-					</div>
-				</li>
-				<li class="about">
-					<div class="listTime">2021/04/06 <span>9:14</span></div>
-					<div class="listCard">
-						<ul>
-							<li>姓名: <span>张三</span></li>
-							<li>性别: <span>男</span> </li>
-							<li>身份证: <span>42011519961030156</span> </li>
-							<li>手机号: <span>1851884541</span> </li>
-							<li>地址: <span>北京-天安门</span> </li>
-							<li v-bind:class="{ bRight: isActive }" v-show="isActive">已就诊</li>
+							<li>姓名: <span>{{item.name}}</span></li>
+							<li>性别: <span>{{item.sex}}</span> </li>
+							<li>订单号: <span>{{item.id}}</span> </li>
+							<li>手机号: <span>{{item.phone}}</span> </li>
+							<li>手机号: <span>{{item.ordtime}}</span> </li>
+							<li>付款金额: <span>{{item.money}}</span> </li>
+							<li class="bRight"><span>{{item.status}}</span> </li>
 						</ul>
 					</div>
 				</li>
@@ -39,9 +28,17 @@
 		data() {
 			return {
 				msg: 234,
-				isActive: true
+				isActive: true,
+				List: []
 			}
-			
+
+		},
+		created() {
+			this.$axios.get('/hospital/v1/disp').then(res => {
+				if (res.data.code === 200) {
+					this.List = res.data.data
+				}
+			})
 		},
 		methods: {
 			onClickLeft() {

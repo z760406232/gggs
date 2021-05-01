@@ -37,19 +37,35 @@
 
 		data() {
 			return {
-
+				datatime: '',
+				week: '',
+				MsgList: '',
+				First: ''
 			}
 		},
 		created() {
-			this.$axios.get('/a').then(res => {
-				console.log(res)
+			this.$axios.get('/hospital/v1/visitime').then(res => {
+				if (res.data.code === 200) {
+					// console.log(res.data.timelater)
+					this.MsgList = res.data.timelater
+					this.First = res.data.timelater[0]
+					// console.log(this.First.datetime,12313)
+				}
+
 			})
 		},
 		methods: {
 			regist() {
-				this.$router.push('/regist')
+				// console.log(this.First.datetime);
+				this.$router.push({
+					path: '/regist',
+					query: {
+						datetime: this.First.datetime,
+						week: this.First.week
+					}
+				})
 			},
-			dingdan(){
+			dingdan() {
 				this.$router.push('/orderlist')
 			}
 		}
@@ -85,8 +101,8 @@
 
 	.firstbox {
 		width: 100%;
-		display: flex; 
-		
+		display: flex;
+
 	}
 
 	.firstbox .iconimg img,

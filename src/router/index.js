@@ -1,17 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../components/index.vue'
-
+import Author from '../components/author.vue'
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+	{
 		path: '/',
-		redirect: '/home',
-		component: Index
+		redirect: '/author',
+		component: Author,
+	},
+	{
+		path: '/author',
+		name: 'Author',
+		component: Author
 	},
 	{
 		path: '/home',
-		name:'Home',
+		name: 'Home',
 		component: Index
 	},
 	{
@@ -20,6 +26,7 @@ const routes = [{
 		component: () => import('../components/regist.vue'),
 		children: [{
 			path: '/regist/index',
+			name: 'RegistIndex',
 			component: () => import('../components/sing.vue')
 		}]
 	}, {
@@ -43,5 +50,7 @@ const routes = [{
 const router = new VueRouter({
 	routes
 })
+
+
 
 export default router
